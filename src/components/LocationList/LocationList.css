@@ -1,0 +1,19 @@
+/* LocationList.css */
+
+.location-list {
+    max-width: 1140px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Создаем 4 столбца в ряд */
+    gap: 20px; /* Промежуток между карточками */
+  }
+  
+  .location-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    background-color: #f5f5f5;
+  }
+
+  

@@ -1,0 +1,7 @@
+/* Popular */
+.image-grid {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 1140px;
+    margin: 0 auto;
+}
