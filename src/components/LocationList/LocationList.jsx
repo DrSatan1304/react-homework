@@ -4,65 +4,11 @@ import LocationCard from '../LocationCard/LocationCard';
 import SearchBar from '../Search/Search';
 import Pagination from '../Pagination/Pagination';
 
-const locations = [
-    {
-        name: "Location 1",
-        city: "West Xzavier",
-        country: "Sao Tome and Principe",
-        address: "Fu fu ka",
-    },
-    {
-        name: "Location 2",
-        city: "South Joy",
-        country: "Eritrea",
-        address: "Kokodjambo",
-    },
-    {
-        name: "Location 22222",
-        city: "South Joy",
-        country: "Eritrea",
-        address: "Kokodjambo",
-    },
-    {
-        name: "Location 3",
-        city: "Northville",
-        country: "Canada",
-        address: "Kokodjambo",
-    },
-    {
-        name: "Location 4",
-        city: "Eastwood",
-        country: "Australia",
-        address: "456 Elm Street",
-    },
-    {
-        name: "Location 5",
-        city: "Central City",
-        country: "United States",
-        address: "789 Oak Street",
-    },
-    {
-        name: "Location 6",
-        city: "West End",
-        country: "United Kingdom",
-        address: "101 Maple Street",
-    },
-    {
-        name: "Location 7",
-        city: "Southside",
-        country: "New Zealand",
-        address: "202 Pine Street",
-    },
-    {
-        name: "Location 8",
-        city: "Downtown",
-        country: "Germany",
-        address: "303 Cedar Street",
-    }
-];
-
 const LocationList = () => {
-    const [currentPage, setCurrentPage] = useState(1);
+    // location
+    const [locations, setLocations] = useState([]);
+    
+    // search
     const [selectCity, setSelectCity] = useState('');
     const [selectCountry, setSelectCountry] = useState('');
     const [selectAddress, setSelectAddress] = useState('');
@@ -73,12 +19,26 @@ const LocationList = () => {
         return searchTerms.every(term => searchString.includes(term));
     };
     const filteredLocations = locations.filter(filterLocations);
+
     // pagination
-    const itemsPerPage = 4;
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 12;
     const pageCount = Math.ceil(filteredLocations.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const locationsToDisplay = filteredLocations.slice(startIndex, endIndex);
+
+     // Unique values for city, country, and address
+    const uniqueCities = [...new Set(locations.map(location => location.city))].map((name, id) => ({ name, id: id.toString() }));
+    const uniqueCountries = [...new Set(locations.map(location => location.country))].map((name, id) => ({ name, id: id.toString() }));
+    const uniqueAddresses = [...new Set(locations.map(location => location.address))].map((name, id) => ({ name, id: id.toString() }));
+
+    useEffect(() => {
+        fetch('https://64f9c54d4098a7f2fc14f616.mockapi.io/Locations')
+            .then(response => {return response.json()})
+            .then(data => {{ setLocations(data) }})
+        
+    })
 
     return (
         <div>
@@ -90,12 +50,21 @@ const LocationList = () => {
                 selectCountry={selectCountry}
                 setSelectCountry={(data) => setSelectCountry(data)}
                 selectAddress={selectAddress}
-                setSelectAddress={(data) => setSelectAddress(data)} />
-            <h2>all events</h2>
+                setSelectAddress={(data) => setSelectAddress(data)}
+                
+                cities={uniqueCities}
+                countries={uniqueCountries}
+                addresses={uniqueAddresses}
+            />
+            <h2>all events ({locations.length})</h2>
             <div className="location-list">
-                {locationsToDisplay.map((location, index) => (
-                    <LocationCard key={index} location={location} />
-                ))}
+                {locationsToDisplay.length === 0 ? (
+                    <p>No Locations found</p>
+                ) : (
+                    locationsToDisplay.map((location, index) => (
+                        <LocationCard key={index} location={location} />
+                    ))
+                )}
             </div>
             <Pagination setCurrentPage={(data) => setCurrentPage(data)} pageCount={pageCount} />
         </div>
