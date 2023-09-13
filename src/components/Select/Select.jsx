@@ -1,15 +1,11 @@
 import React, { useState, useContext } from 'react'
-
 import { Data } from '../../App'
 
 const Select = ({ props, setData, differ }) => {
-    const [value, setValue] = useState('Select me')
 
     const { setContcity, setContcountry, setContaddress } = useContext(Data)
-
     const setOurSelect = (e) => {
-        setValue(e.target.value);
-        // setData(e.target.value)
+
 
         if (differ == 'city') {
             setContcity(e.target.value)
@@ -25,7 +21,6 @@ const Select = ({ props, setData, differ }) => {
         <select
             onChange={(e) => setOurSelect(e)}
             className='select_item'
-
         >
             <option value="">{` Select me`}</option>
             {props.map((item) => (
@@ -34,9 +29,6 @@ const Select = ({ props, setData, differ }) => {
                 </option>
             ))}
         </select>
-
-
-
     )
 }
 

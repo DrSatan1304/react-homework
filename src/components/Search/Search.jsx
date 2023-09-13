@@ -3,14 +3,9 @@ import './Search.css';
 import Select from '../Select/Select';
 import { Data } from '../../App'
 
-
 const SearchBar = ({ cities, countries, addresses }) => {
     const [searchQuery, setSearchQuery] = useState('');
-
     const { cont, setCont } = useContext(Data)
-
-
-
     const handleSearchChange = (e) => {
 
         setCont(e.target.value);

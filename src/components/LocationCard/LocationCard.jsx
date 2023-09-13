@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './LocationCard.module.scss'
-
 const LocationCard = ({ location }) => {
     return (
         <div className={style.root}>
