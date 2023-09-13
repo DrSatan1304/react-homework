@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import Search from './components/Search/Search';
 import Popular from './components/Popular/Popular';
 import LocationList from './components/LocationList/LocationList';
+import './App.scss'
 
 import './App.css';
 
