@@ -1,11 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
-const Select = ({ props, setData }) => {
+import { Data } from '../../App'
+
+const Select = ({ props, setData, differ }) => {
     const [value, setValue] = useState('Select me')
+
+    const { setContcity, setContcountry, setContaddress } = useContext(Data)
 
     const setOurSelect = (e) => {
         setValue(e.target.value);
-        setData(e.target.value)
+        // setData(e.target.value)
+
+        if (differ == 'city') {
+            setContcity(e.target.value)
+        }
+        if (differ == 'country') {
+            setContcountry(e.target.value)
+        }
+        if (differ == 'address') {
+            setContaddress(e.target.value)
+        }
     }
     return (
         <select

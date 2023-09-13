@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Search.css';
 import Select from '../Select/Select';
+import { Data } from '../../App'
 
-const SearchBar = ({selectCity, setSelectCity, selectCountry, setSelectCountry, selectAddress, setSelectAddress, setSearch, cities, countries, addresses}) => {
+
+const SearchBar = ({ cities, countries, addresses }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
+    const { cont, setCont } = useContext(Data)
+
+
+
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-        setSearch(e.target.value)
+
+        setCont(e.target.value);
     };
 
     return (
@@ -16,15 +22,15 @@ const SearchBar = ({selectCity, setSelectCity, selectCountry, setSelectCountry, 
                 <input
                     type="text"
                     placeholder="Search..."
-                    value={searchQuery}
+                    value={cont}
                     onChange={(e) => handleSearchChange(e)}
                     className="search-input"
                 />
             </div>
             <div className="selectors">
-                <Select props={cities} data={selectCity} setData={(data) => setSelectCity(data)} />
-                <Select props={countries} data={selectCountry} setData={(data) => setSelectCountry(data)} />
-                <Select props={addresses} data={selectAddress} setData={(data) => setSelectAddress(data)} />
+                <Select props={cities} differ={'city'} />
+                <Select props={countries} differ={'country'} />
+                <Select props={addresses} differ={'address'} />
             </div>
         </form>
     );
